@@ -1,0 +1,22 @@
+.dropzone {
+  border: 2px dashed #0087F7;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+}
+
+.file-upload {
+  margin: 20px auto;
+  width: 50%;
+}
+.logo {
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 50px; /* Adjust the height to match the navbar */
+  object-fit: contain;
+  vertical-align: middle; /* Align the image vertically in the navbar */
+}

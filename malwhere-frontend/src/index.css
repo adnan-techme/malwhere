@@ -1,0 +1,53 @@
+/* General CSS reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #edf1f5;
+}
+
+.main-container {
+  background-color: #edf1f5;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3d635b;
+  padding: 20px 30px;
+  border-bottom: 3px solid #2e4e4b;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+.menu button {
+  background-color: #b3debc;
+  color: #000000;
+  border: none;
+  border-radius: 20px;
+  margin-left: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background-color: #92be9c;
+}
