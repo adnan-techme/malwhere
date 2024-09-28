@@ -1,0 +1,14 @@
+# Node modules
+node_modules/
+
+# Python virtual environments
+venv/
+
+# Large files
+*.h5
+*.keras
+*.so
+*.dylib
+
+# System files
+.DS_Store
