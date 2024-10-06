@@ -5,8 +5,6 @@ node_modules/
 venv/
 
 # Large files
-*.h5
-*.keras
 *.so
 *.dylib
 

@@ -1,96 +1,62 @@
 import React from 'react';
 import './Reports.css';
-import { PieChart, Pie, Cell, LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 
-// Sample data for charts (IMPORTANT: NEED TO CHANGE)
-const breakdownData = [
-  { name: 'Trojan', value: 25 },
-  { name: 'Virus', value: 28 },
-  { name: 'Spyware', value: 16 },
-  { name: 'Ransomware', value: 9 },
-  { name: 'Keylogger', value: 22 },
-];
+const Reports = ({ malwareCount, mostCommonType }) => {
+  const breakdownData = malwareCount
+    ? Object.entries(malwareCount).map(([key, value]) => ({
+        name: key,
+        value: value,
+      }))
+    : [];
 
-const sourcesData = [
-  { name: 'Email Attachments', value: 40 },
-  { name: 'Infected Websites', value: 30 },
-  { name: 'Downloaded Software', value: 30 },
-];
+  const COLORS = ['#B8860B', '#FF4500', '#4682B4', '#D2691E', '#228B22', '#8A2BE2', '#4682B4', '#DC143C', '#8B0000'];
 
-const COLORS = ['#FFB347', '#FF6347', '#008080', '#FF69B4', '#4CAF50']; 
+  const totalMalwareDetected = breakdownData.reduce((acc, cur) => acc + cur.value, 0);
 
-const behavioralData = [
-  { name: 'Mon', risk: 110 },
-  { name: 'Tue', risk: 150 },
-  { name: 'Wed', risk: 120 },
-  { name: 'Thu', risk: 160 },
-  { name: 'Fri', risk: 220 },
-  { name: 'Sat', risk: 300 },
-];
-
-const Reports = () => {
   return (
     <div className="reports-container">
-      {/* Quick Summary */}
-      <div className="summary-section">
-        <h3 className="section-heading">Quick Summary</h3>
-        <div className="summary-details">
-          <div className="pseudo-button">Malware Detected</div>
-          <div className="pseudo-button">Type: Trojan</div>
-          <div className="pseudo-button">Confidence: 86%</div>
-          <div className="pseudo-button">Model Used: CNN-LSTM</div>
-        </div>
-      </div>
+      <h1 className="main-title">Scan Reports</h1>
 
-      {/* Scan History */}
-      <div className="scan-history-section">
-        <h3 className="section-heading">Scan History</h3>
-        <ul className="scan-history-list">
-          <li>contacts.csv <span className="status success">✔</span></li>
-          <li>taskA.csv <span className="status error">✖</span></li>
-          <li>taskB.csv <span className="status success">✔</span></li>
-          <li>taskC.csv <span className="status error">✖</span></li>
-        </ul>
-      </div>
-
-      {/* Breakdown & Sources */}
-      <div className="breakdown-sources-section">
-        {/* Breakdown Chart */}
-        <div className="chart-section breakdown-chart">
-          <h3 className="section-heading">Breakdown</h3>
-          <PieChart width={200} height={200}>
-            <Pie data={breakdownData} dataKey="value" cx="50%" cy="50%" outerRadius={80}>
-              {breakdownData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-          </PieChart>
+      <div className="summary-and-breakdown-container">
+        {/* Quick Summary */}
+        <div className="summary-section">
+          <h3 className="section-heading">Quick Summary</h3>
+          <div className="summary-details">
+            <div className="pseudo-button">Total Files Scanned: {totalMalwareDetected}</div>
+            <div className="pseudo-button">Most Common Malware Type: {mostCommonType || "Unknown"}</div>
+            <div className="pseudo-button">Occurrences of Common Type: {malwareCount[mostCommonType] || "N/A"}</div>
+            <div className="pseudo-button">Model Used: CNN-LSTM</div>
+          </div>
         </div>
 
-        {/* Sources Chart */}
-        <div className="chart-section sources-chart">
-          <h3 className="section-heading">Sources</h3>
-          <PieChart width={200} height={200}>
-            <Pie data={sourcesData} dataKey="value" cx="50%" cy="50%" outerRadius={80}>
-              {sourcesData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-          </PieChart>
+        {/* Moved Breakdown text outside the light green container */}
+        <h3 className="section-heading centered-heading">Breakdown</h3>
+
+        {/* Breakdown Section */}
+        <div className="breakdown-section">
+          {breakdownData.length > 0 ? (
+            <PieChart width={500} height={400}>
+              <Pie
+                data={breakdownData}
+                dataKey="value"
+                cx="50%"
+                cy="50%"
+                outerRadius={120}
+                fill="#8884d8"
+                label={({ name, value }) => `${name}: ${value}`}
+                labelLine={false}
+              >
+                {breakdownData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          ) : (
+            <p>No malware detected.</p>
+          )}
         </div>
-      </div>
-
-      {/* Behavioral Analysis */}
-      <div className="behavioral-analysis-section">
-        <h3 className="section-heading">Behavioral Analysis</h3>
-        <LineChart width={500} height={250} data={behavioralData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" stroke="#ffffff" />  
-        <YAxis stroke="#ffffff" />  
-        <Tooltip />
-        <Line type="monotone" dataKey="risk" stroke="#00C49F" /> 
-        </LineChart>
-
       </div>
     </div>
   );

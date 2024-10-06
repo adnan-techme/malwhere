@@ -8,12 +8,13 @@ import numpy as np
 from collections import Counter
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
 
 UPLOAD_FOLDER = './uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-model = tf.keras.models.load_model('CNNLSTM.keras')  # Update with our desired model's path (IMPORTANT)
+# Load the model
+model = tf.keras.models.load_model('cnnMulticlassifier.keras')  # Update with your model's path
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -31,56 +32,57 @@ def upload_file():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(file_path)
 
-    # Process the uploaded file and make a prediction
+    # Process the uploaded file and make a prediction using the model
     input_data = process_file(file_path)
     predictions = model.predict(input_data)
 
-    print("Predictions:", predictions)  # Debugging: Print the predictions to see its structure (TO BE REMOVED)
-    print(f"Predictions: {predictions}, Shape: {predictions.shape}")
+    # Decode the prediction into human-readable categories
+    malware_type = decode_predictions(predictions)
+    
+    # Get the most common malware type
+    most_common_type, most_common_count = Counter(malware_type).most_common(1)[0] if malware_type else ("Unknown", 0)
+    
+    # Pass back the malware count and most common type
+    malware_count = Counter(malware_type)
 
-    malware_type = decode_predictions(predictions)  # Decode the prediction
+    # Debugging print statement to check the predictions
+    print(f"Malware Predictions: {malware_type[:10]}")
+    print(f"Malware Count Summary: {malware_count}")
 
-    return jsonify({'message': 'File uploaded and analyzed', 'malware_type': malware_type}), 200
-
-
-import pandas as pd
+    return jsonify({
+        'message': 'File uploaded and analyzed',
+        'malware_count': dict(malware_count),
+        'most_common_type': most_common_type,
+        'most_common_count': most_common_count
+    }), 200
 
 def process_file(file_path):
     # Read the CSV file into a DataFrame
     data = pd.read_csv(file_path)
-    
-    # Selecting the relevant columns for the model (adjust based on the model's requirements)
-    features = data[['dur', 'proto', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl']]
 
-    # Convert categorical 'proto' column to one-hot encoding if it's part of the features
-    features = pd.get_dummies(features, columns=['proto'], drop_first=True)
+    # Selecting the features that were used during the model's test run
+    features = data[['id', 'spkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 
+                     'sload', 'dload', 'sinpkt', 'dinpkt', 'sjit', 'djit', 
+                     'swin', 'stcpb', 'dtcpb', 'dwin', 'smean', 'dmean', 'response_body_len']]
 
-    # Ensure all values are numeric (TensorFlow needs all input to be numeric)
+    # Ensure all values are numeric
     input_data = features.astype(float).to_numpy()
 
     return input_data
-
 
 def decode_predictions(predictions):
     # Assuming predictions is an array with shape (number_of_samples, number_of_classes)
     predicted_classes = np.argmax(predictions, axis=1)  # Get the index of the highest probability for each sample
 
-    # Mapping of class indices to actual malware types from the UNSW-NB15 dataset
-    class_labels = ['Normal', 'Backdoor', 'Analysis', 'Fuzzers', 'Shellcode', 
-                    'Reconnaissance', 'Exploits', 'DoS', 'Worms', 'Generic']
+    # Mapping of class indices to actual malware types based on your model's class mapping
+    class_labels = ['Analysis', 'Backdoor', 'DoS', 'Exploits', 'Fuzzers', 'Generic', 'Normal', 'Reconnaissance', 'Worms']
 
     # Convert the predicted class indices to human-readable malware types
     malware_types = [class_labels[index] for index in predicted_classes]
 
-    # Count how many of each type of malware were found
-    malware_count = Counter(malware_types)
+    print("First 10 Decoded Predictions:", malware_types[:10])  # Debugging: Print first 10 decoded predictions
 
-    # Create a summary string that shows the user how many of each malware type was found
-    summary = "Malware detection summary:\n"
-    for malware_type, count in malware_count.items():
-        summary += f"{malware_type}: {count} occurrences\n"
-
-    return summary
+    return malware_types
 
 if __name__ == '__main__':
     app.run(debug=True)

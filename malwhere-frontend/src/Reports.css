@@ -1,95 +1,74 @@
 .reports-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 20px;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
 }
 
-.section-heading {
-    font-size: 18px;
-    color: #ffffff;
+.main-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #242424;
+    margin-bottom: 30px;
+}
+
+/* Container for both summary and breakdown */
+.summary-and-breakdown-container {
+    background-color: #3d635b;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;  /* Adjust the width */
+}
+
+/* Center the Breakdown title */
+.centered-heading {
+    text-align: center;
     margin-bottom: 10px;
 }
 
-/* Summary Section */
+/* Quick Summary Section */
 .summary-section {
-    grid-column: 1 / 2;
-    grid-row: 1;
-    background-color: #3d635b;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
 }
 
-/* Aligning pseudo buttons 2x2 */
+.section-heading {
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%; /* Ensure full width to center text */
+    display: flex;
+    justify-content: center; /* Horizontally centers the text */
+}
+
+/* Aligning pseudo buttons */
 .summary-details {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 10px;
+    gap: 20px;
 }
 
-/* Pseudo buttons style (same as scan history) */
 .pseudo-button {
     background-color: #b3debc;
-    padding: 10px;
+    padding: 15px;
     border-radius: 20px;
     font-weight: bold;
     color: #000;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
     text-align: center;
-    white-space: nowrap;
 }
 
-/* Scan History Section */
-.scan-history-section {
-    grid-column: 1 / 2;
-    grid-row: 2;
-    background-color: #3d635b;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.scan-history-list li {
-    background-color: #b3debc;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 10px 0;
-    list-style-type: none;
-    color: #000;
-}
-
-.status.success {
-    color: green;
-}
-
-.status.error {
-    color: red;
-}
-
-/* Breakdown and Sources Section */
-.breakdown-sources-section {
-    grid-column: 2 / 3;
-    grid-row: 1;
+/* Breakdown Section */
+.breakdown-section {
+    width: 65%;  /* Adjust to make it smaller */
     display: flex;
-    gap: 20px;
-}
-
-.chart-section {
-    flex: 1;
-    background-color: #3d635b;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Behavioral Analysis Section */
-.behavioral-analysis-section {
-    grid-column: 2 / 3;
-    grid-row: 2;
-    background-color: #3d635b;
-    padding: 20px;
-    border-radius: 10px;
+    flex-direction: column; /* Stack content vertically */
+    align-items: center;    /* Centers the content horizontally */
+    background-color: #b3debc;
+    border-radius: 20px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
