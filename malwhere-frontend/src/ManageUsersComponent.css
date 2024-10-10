@@ -1,0 +1,137 @@
+.manage-users-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: #3d635b;
+    border-radius: 15px;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    margin: 80px auto;
+  }
+  
+  .manage-users-container h2 {
+    margin: 0;
+    padding-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+  }
+  
+  .add-user-section {
+    background-color: #b3debc;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .add-user-section input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+  
+  .add-user-section input:focus {
+    outline: none;
+    border-color: #92be9c;
+  }
+  
+  .add-user-section select {
+    width: 84%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+  }
+  
+  .add-user-section button {
+    width: 50%;
+    padding: 15px;
+    background-color: #92be9c;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .add-user-section button:hover {
+    background-color: #a5cfb5;
+  }
+  
+  .user-list-section {
+    background-color: #b3debc;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+  }
+  
+  .user-list-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .user-list-section li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .user-list-section li button {
+    background-color: #ff7777;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .user-list-section li button:hover {
+    background-color: #ff4c4c;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .user-list-section li:last-child {
+    border-bottom: none;
+  }
+  
+  .delete-user-button {
+    background-color: #ff7777;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .delete-user-button:hover {
+    background-color: #ff4c4c;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+  }

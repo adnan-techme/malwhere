@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginComponent.css';
+import axios from 'axios';
 
 const LoginComponent = ({ setUserRole }) => {
   const [username, setUsername] = useState('');
@@ -9,15 +10,21 @@ const LoginComponent = ({ setUserRole }) => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (username === 'admin' && password === 'tipadmin1') {
-      setUserRole('admin');
-      navigate('/'); // Admin goes to upload page
-    } else if (username === 'user' && password === 'tipuser1') {
-      setUserRole('user');
-      navigate('/reports'); // User goes to reports page
-    } else {
+    axios.post('http://localhost:5000/login', {
+      username: username,
+      password: password
+    })
+    .then(response => {
+      setUserRole(response.data.role);
+      if (response.data.role === 'admin') {
+        navigate('/');
+      } else {
+        navigate('/reports');
+      }
+    })
+    .catch(error => {
       setErrorMessage('Invalid credentials. Please try again.');
-    }
+    });
   };
 
   return (

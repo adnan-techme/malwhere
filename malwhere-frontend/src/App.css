@@ -20,3 +20,13 @@
   object-fit: contain;
   vertical-align: middle; /* Align the image vertically in the navbar */
 }
+.footer-bar {
+  width: 100%;
+  background-color: #3d635b;
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
